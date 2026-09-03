@@ -1,17 +1,16 @@
 import { products } from "./data/products";
+import ProductCard from "./components/ProductCard";
+import "./App.css";
 
 function App() {
   return (
     <>
       <h1>Wohlfühlatmosphäre</h1>
-      <ul>
+      <div className="product-grid">
         {products.map((product) => (
-          <li key={product.id}>
-            <strong>{product.name}</strong> — {product.description} (
-            {product.price} €)
-          </li>
+          <ProductCard key={product.id} product={product} />
         ))}
-      </ul>
+      </div>
     </>
   );
 }
