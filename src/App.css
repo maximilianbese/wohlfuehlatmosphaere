@@ -41,7 +41,35 @@
 .size-row {
   display: flex;
   justify-content: space-between;
-  padding: 0.4rem 0;
+  width: 100%;
+  padding: 0.5rem 0.25rem;
+  border: none;
   border-top: 1px solid #f0e9e0;
-  font-size: 0.9rem;
+  background: none;
+  font: inherit; /* Button erbt Schrift der Seite statt Browser-Standard */
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.size-row:hover {
+  background: #f3ece2;
+  font-weight: 600;
+}
+
+.add-button {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 8px;
+  background: #b08968;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.add-button:hover {
+  background: #9c7355;
 }
