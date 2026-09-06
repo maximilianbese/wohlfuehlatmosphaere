@@ -53,6 +53,10 @@
 }
 
 .size-row:hover {
+  background: #faf7f2;
+}
+
+.size-row--selected {
   background: #f3ece2;
   font-weight: 600;
 }
@@ -72,4 +76,18 @@
 
 .add-button:hover {
   background: #9c7355;
+}
+
+.add-button:disabled {
+  background: #d8cabb;
+  cursor: not-allowed;
+}
+
+.cart {
+  display: block;
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  background: #fff;
+  border: 1px solid #eadfd3;
+  border-radius: 12px;
 }

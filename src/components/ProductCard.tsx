@@ -1,13 +1,14 @@
 import { useState } from "react";
-import type { Product } from "../types";
+import type { CandleSize, CartItem, Product } from "../types";
 import { formatPrice } from "../utils/format";
 
 type ProductCardProps = {
   product: Product;
+  onAddToCart: (item: CartItem) => void;
 };
 
-function ProductCard({ product }: ProductCardProps) {
-  const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
+function ProductCard({ product, onAddToCart }: ProductCardProps) {
+  const [selectedSize, setSelectedSize] = useState<CandleSize | null>(null);
 
   return (
     <article className="product-card">
@@ -16,7 +17,7 @@ function ProductCard({ product }: ProductCardProps) {
 
       <ul className="sizes">
         {product.sizes.map((size) => {
-          const isSelected = size.label === selectedSize.label;
+          const isSelected = size.label === selectedSize?.label;
           return (
             <li key={size.label}>
               <button
@@ -36,8 +37,22 @@ function ProductCard({ product }: ProductCardProps) {
         })}
       </ul>
 
-      <button type="button" className="add-button">
-        In den Warenkorb — {formatPrice(selectedSize.price)}
+      <button
+        type="button"
+        className="add-button"
+        disabled={selectedSize === null}
+        onClick={() => {
+          if (selectedSize === null) return;
+          onAddToCart({
+            productId: product.id,
+            productName: product.name,
+            size: selectedSize,
+          });
+        }}
+      >
+        {selectedSize
+          ? `In den Warenkorb - ${formatPrice(selectedSize.price)}`
+          : "Bitte Größe wählen"}
       </button>
     </article>
   );

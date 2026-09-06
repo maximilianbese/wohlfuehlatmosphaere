@@ -10,3 +10,9 @@ export type Product = {
   description: string;
   sizes: CandleSize[];
 };
+
+export type CartItem = {
+  productId: number;
+  productName: string;
+  size: CandleSize;
+};
