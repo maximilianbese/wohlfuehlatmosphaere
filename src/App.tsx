@@ -25,6 +25,7 @@ function App() {
             <li key={index}>
               {item.productName} · {item.size.label} —{" "}
               {formatPrice(item.size.price)}
+              {item.text && <em> „{item.text}"</em>}
             </li>
           ))}
         </ul>

@@ -15,4 +15,5 @@ export type CartItem = {
   productId: number;
   productName: string;
   size: CandleSize;
+  text: string;
 };

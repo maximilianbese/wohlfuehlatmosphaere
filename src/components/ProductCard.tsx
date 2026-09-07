@@ -9,6 +9,7 @@ type ProductCardProps = {
 
 function ProductCard({ product, onAddToCart }: ProductCardProps) {
   const [selectedSize, setSelectedSize] = useState<CandleSize | null>(null);
+  const [text, setText] = useState("");
 
   return (
     <article className="product-card">
@@ -37,6 +38,14 @@ function ProductCard({ product, onAddToCart }: ProductCardProps) {
         })}
       </ul>
 
+      <textarea
+        className="personalization"
+        placeholder="Dein Text (Name, Datum, Spruch ...)"
+        value={text}
+        onChange={(event) => setText(event.target.value)}
+        rows={3}
+      />
+
       <button
         type="button"
         className="add-button"
@@ -47,7 +56,10 @@ function ProductCard({ product, onAddToCart }: ProductCardProps) {
             productId: product.id,
             productName: product.name,
             size: selectedSize,
+            text: text,
           });
+          setSelectedSize(null);
+          setText("");
         }}
       >
         {selectedSize
