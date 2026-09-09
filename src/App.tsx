@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { CartItem } from "./types";
 import { products } from "./data/products";
 import ProductCard from "./components/ProductCard";
-import { formatPrice } from "./utils/format";
+import Cart from "./components/Cart";
 import "./App.css";
 
 function App() {
@@ -12,24 +12,15 @@ function App() {
     setCart((prev) => [...prev, item]);
   }
 
-  const total = cart.reduce((sum, item) => sum + item.size.price, 0);
+  function removeFromCart(index: number) {
+    setCart((prev) => prev.filter((_, i) => i !== index));
+  }
 
   return (
     <>
       <h1>Wohlfühlatmosphäre</h1>
 
-      <section className="cart">
-        <strong>Warenkorb ({cart.length})</strong> — {formatPrice(total)}
-        <ul>
-          {cart.map((item, index) => (
-            <li key={index}>
-              {item.productName} · {item.size.label} —{" "}
-              {formatPrice(item.size.price)}
-              {item.text && <em> „{item.text}"</em>}
-            </li>
-          ))}
-        </ul>
-      </section>
+      <Cart items={cart} onRemove={removeFromCart} />
 
       <div className="product-grid">
         {products.map((product) => (
