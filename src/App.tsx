@@ -17,21 +17,26 @@ function App() {
   }
 
   return (
-    <>
-      <h1>Wohlfühlatmosphäre</h1>
+    <div className="app">
+      <header className="site-header">
+        <h1>Wohlfühlatmosphäre</h1>
+        <p className="tagline">Personalisierte Kerzen für besondere Momente</p>
+      </header>
 
-      <Cart items={cart} onRemove={removeFromCart} />
+      <main className="container">
+        <Cart items={cart} onRemove={removeFromCart} />
 
-      <div className="product-grid">
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            onAddToCart={addToCart}
-          />
-        ))}
-      </div>
-    </>
+        <div className="product-grid">
+          {products.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onAddToCart={addToCart}
+            />
+          ))}
+        </div>
+      </main>
+    </div>
   );
 }
 

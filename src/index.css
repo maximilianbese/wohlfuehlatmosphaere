@@ -1,13 +1,24 @@
 :root {
-  font-family:
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
-  line-height: 1.5;
-  color: #2c2420;
-  background-color: #faf7f2;
+  --bg: #f7f2ec;
+  --surface: #ffffff;
+  --border: #eadfd2;
+  --text: #3a322c;
+  --text-muted: #8a7d6e;
+  --accent: #b5835a;
+  --accent-dark: #96683f;
+  --accent-soft: #f3ebe1;
+
+  --radius: 14px;
+  --shadow-sm: 0 1px 3px rgba(58, 50, 44, 0.06);
+  --shadow-md: 0 12px 30px -12px rgba(58, 50, 44, 0.22);
+
+  --font-display: "Cormorant Garamons", Georgia, serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text);
+  background-color: var(--bg);
 }
 
 * {
@@ -16,5 +27,11 @@
 
 body {
   margin: 0;
-  padding: 2rem;
+}
+
+h1,
+h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
