@@ -1,0 +1,90 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  transition:
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+.card h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.5rem;
+}
+.card p {
+  margin: 0 0 1rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.sizes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sizeRow {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.45rem 0.5rem;
+  margin-bottom: 0.15rem;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+.sizeRow:hover {
+  background: var(--accent-soft);
+}
+.sizeRowSelected {
+  background: var(--accent-soft);
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1.5px var(--accent);
+}
+
+.personalization {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font: inherit;
+  resize: vertical;
+  background: var(--bg);
+}
+.personalization:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.addButton {
+  margin-top: auto;
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.addButton:hover:not(:disabled) {
+  background: var(--accent-dark);
+}
+.addButton:disabled {
+  background: #ddd0c1;
+  cursor: not-allowed;
+}

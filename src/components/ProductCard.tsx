@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { CandleSize, CartItem, Product } from "../types";
 import { formatPrice } from "../utils/format";
+import styles from "./ProductCard.module.css";
 
 type ProductCardProps = {
   product: Product;
@@ -12,11 +13,11 @@ function ProductCard({ product, onAddToCart }: ProductCardProps) {
   const [text, setText] = useState("");
 
   return (
-    <article className="product-card">
+    <article className={styles.card}>
       <h2>{product.name}</h2>
       <p>{product.description}</p>
 
-      <ul className="sizes">
+      <ul className={styles.sizes}>
         {product.sizes.map((size) => {
           const isSelected = size.label === selectedSize?.label;
           return (
@@ -24,7 +25,9 @@ function ProductCard({ product, onAddToCart }: ProductCardProps) {
               <button
                 type="button"
                 className={
-                  isSelected ? "size-row size-row--selected" : "size-row"
+                  isSelected
+                    ? `${styles.sizeRow} ${styles.sizeRowSelected}`
+                    : styles.sizeRow
                 }
                 onClick={() => setSelectedSize(size)}
               >
@@ -39,7 +42,7 @@ function ProductCard({ product, onAddToCart }: ProductCardProps) {
       </ul>
 
       <textarea
-        className="personalization"
+        className={styles.personalization}
         placeholder="Dein Text (Name, Datum, Spruch ...)"
         value={text}
         onChange={(event) => setText(event.target.value)}
@@ -48,7 +51,7 @@ function ProductCard({ product, onAddToCart }: ProductCardProps) {
 
       <button
         type="button"
-        className="add-button"
+        className={styles.addButton}
         disabled={selectedSize === null}
         onClick={() => {
           if (selectedSize === null) return;
