@@ -1,11 +1,20 @@
+import { useState } from "react";
 import { useCart } from "./hooks/useCart";
 import { products } from "./data/products";
 import ProductCard from "./components/ProductCard";
 import Cart from "./components/Cart";
 import "./App.css";
 
+const categories = ["Alle", ...new Set(products.map((p) => p.category))];
+
 function App() {
   const { items, addToCart, removeFromCart } = useCart();
+  const [activeCategory, setActiveCategory] = useState("Alle");
+
+  const visibleProducts =
+    activeCategory === "Alle"
+      ? products
+      : products.filter((product) => product.category === activeCategory);
 
   return (
     <div className="app">
@@ -17,8 +26,25 @@ function App() {
       <main className="container">
         <Cart items={items} onRemove={removeFromCart} />
 
+        <div className="filter-bar">
+          {categories.map((category) => (
+            <button
+              key={category}
+              type="button"
+              className={
+                category === activeCategory
+                  ? "filter-button filter-button--active"
+                  : "filter-button"
+              }
+              onClick={() => setActiveCategory(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
         <div className="product-grid">
-          {products.map((product) => (
+          {visibleProducts.map((product) => (
             <ProductCard
               key={product.id}
               product={product}
