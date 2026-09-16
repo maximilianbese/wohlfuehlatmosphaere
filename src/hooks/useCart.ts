@@ -12,5 +12,9 @@ export function useCart() {
     setItems((prev) => prev.filter((_, i) => i !== index));
   }
 
-  return { items, addToCart, removeFromCart };
+  function clearCart() {
+    setItems([]);
+  }
+
+  return { items, addToCart, removeFromCart, clearCart };
 }

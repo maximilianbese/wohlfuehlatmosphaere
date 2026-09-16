@@ -1,14 +1,15 @@
 import { useState } from "react";
-import type { CandleSize, CartItem, Product } from "../types";
+import type { CandleSize, Product } from "../types";
 import { formatPrice } from "../utils/format";
+import { useCartContext } from "../context/CartContext";
 import styles from "./ProductCard.module.css";
 
 type ProductCardProps = {
   product: Product;
-  onAddToCart: (item: CartItem) => void;
 };
 
-function ProductCard({ product, onAddToCart }: ProductCardProps) {
+function ProductCard({ product }: ProductCardProps) {
+  const { addToCart } = useCartContext();
   const [selectedSize, setSelectedSize] = useState<CandleSize | null>(null);
   const [text, setText] = useState("");
 
@@ -55,7 +56,7 @@ function ProductCard({ product, onAddToCart }: ProductCardProps) {
         disabled={selectedSize === null}
         onClick={() => {
           if (selectedSize === null) return;
-          onAddToCart({
+          addToCart({
             productId: product.id,
             productName: product.name,
             size: selectedSize,

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useCart } from "./hooks/useCart";
 import { products } from "./data/products";
 import ProductCard from "./components/ProductCard";
 import Cart from "./components/Cart";
@@ -8,7 +7,6 @@ import "./App.css";
 const categories = ["Alle", ...new Set(products.map((p) => p.category))];
 
 function App() {
-  const { items, addToCart, removeFromCart } = useCart();
   const [activeCategory, setActiveCategory] = useState("Alle");
 
   const visibleProducts =
@@ -24,7 +22,7 @@ function App() {
       </header>
 
       <main className="container">
-        <Cart items={items} onRemove={removeFromCart} />
+        <Cart />
 
         <div className="filter-bar">
           {categories.map((category) => (
@@ -45,11 +43,7 @@ function App() {
 
         <div className="product-grid">
           {visibleProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onAddToCart={addToCart}
-            />
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </main>

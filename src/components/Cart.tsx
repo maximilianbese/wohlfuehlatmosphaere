@@ -1,14 +1,39 @@
-import type { CartItem } from "../types";
+import { useState } from "react";
 import { formatPrice } from "../utils/format";
+import { useCartContext } from "../context/CartContext";
 import styles from "./Cart.module.css";
 
-type CartProps = {
-  items: CartItem[];
-  onRemove: (index: number) => void;
-};
+function Cart() {
+  const { items, removeFromCart, clearCart } = useCartContext();
+  const [status, setStatus] = useState<"idle" | "sending" | "done">("idle");
 
-function Cart({ items, onRemove }: CartProps) {
   const total = items.reduce((sum, item) => sum + item.size.price, 0);
+
+  async function handleSubmit() {
+    setStatus("sending");
+    // Versand simulieren (hier käme später ein echtes Backend / eine E-Mail):
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    console.log("Bestellung abgeschickt:", items);
+    clearCart();
+    setStatus("done");
+  }
+
+  if (status === "done") {
+    return (
+      <section className={styles.cart}>
+        <p className={styles.success}>
+          ✓ Danke! Deine Bestellung ist eingegangen — wir melden uns bald.
+        </p>
+        <button
+          type="button"
+          className={styles.orderButton}
+          onClick={() => setStatus("idle")}
+        >
+          Weiter einkaufen
+        </button>
+      </section>
+    );
+  }
 
   return (
     <section className={styles.cart}>
@@ -22,26 +47,40 @@ function Cart({ items, onRemove }: CartProps) {
           Noch nichts ausgewählt — wähle eine Kerze und Größe.
         </p>
       ) : (
-        <ul className={styles.list}>
-          {items.map((item, index) => (
-            <li key={index} className={styles.item}>
-              <span className={styles.info}>
-                {item.productName} · {item.size.label} · {item.size.heightCm} cm
-                {item.text && <em className={styles.text}> „{item.text}"</em>}
-              </span>
-              <span className={styles.price}>
-                {formatPrice(item.size.price)}
-              </span>
-              <button
-                type="button"
-                className={styles.remove}
-                onClick={() => onRemove(index)}
-              >
-                ✕
-              </button>
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul className={styles.list}>
+            {items.map((item, index) => (
+              <li key={index} className={styles.item}>
+                <span className={styles.info}>
+                  {item.productName} · {item.size.label} · {item.size.heightCm}{" "}
+                  cm
+                  {item.text && <em className={styles.text}> „{item.text}"</em>}
+                </span>
+                <span className={styles.price}>
+                  {formatPrice(item.size.price)}
+                </span>
+                <button
+                  type="button"
+                  className={styles.remove}
+                  onClick={() => removeFromCart(index)}
+                >
+                  ✕
+                </button>
+              </li>
+            ))}
+          </ul>
+
+          <button
+            type="button"
+            className={styles.orderButton}
+            onClick={handleSubmit}
+            disabled={status === "sending"}
+          >
+            {status === "sending"
+              ? "Wird gesendet …"
+              : `Bestellen — ${formatPrice(total)}`}
+          </button>
+        </>
       )}
     </section>
   );

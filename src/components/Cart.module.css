@@ -64,3 +64,32 @@
 .remove:hover {
   color: var(--accent-dark);
 }
+
+.orderButton {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.orderButton:hover:not(:disabled) {
+  background: var(--accent-dark);
+}
+
+.orderButton:disabled {
+  background: #ddd0c1;
+  cursor: not-allowed;
+}
+
+.success {
+  margin: 0 0 1rem;
+  color: var(--accent-dark);
+  font-weight: 600;
+}
