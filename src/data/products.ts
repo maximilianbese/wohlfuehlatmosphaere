@@ -11,6 +11,7 @@ export const products: Product[] = [
       { label: "M", heightCm: 20, price: 15 },
       { label: "L", heightCm: 27, price: 25 },
     ],
+    image: "/produkte/kindersegnung-kerze.jpg",
   },
   {
     id: 2,
@@ -34,6 +35,7 @@ export const products: Product[] = [
       { label: "M", heightCm: 20, price: 15 },
       { label: "L", heightCm: 27, price: 25 },
     ],
+    image: "/produkte/taufkerze.jpg",
   },
   {
     id: 4,
@@ -45,5 +47,6 @@ export const products: Product[] = [
       { label: "M", heightCm: 20, price: 15 },
       { label: "L", heightCm: 27, price: 25 },
     ],
+    image: "/produkte/trauerkerze.jpg",
   },
 ];

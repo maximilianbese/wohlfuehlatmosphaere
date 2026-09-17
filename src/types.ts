@@ -9,6 +9,7 @@ export type Product = {
   name: string;
   category: string;
   description: string;
+  image?: string;
   sizes: CandleSize[];
 };
 

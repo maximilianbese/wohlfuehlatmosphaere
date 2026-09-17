@@ -15,6 +15,17 @@ function ProductCard({ product }: ProductCardProps) {
 
   return (
     <article className={styles.card}>
+      <div className={styles.imageWrap}>
+        {product.image ? (
+          <img
+            className={styles.image}
+            src={product.image}
+            alt={product.name}
+          />
+        ) : (
+          <span className={styles.imagePlaceholder}>🕯️</span>
+        )}
+      </div>
       <h2>{product.name}</h2>
       <p>{product.description}</p>
 
