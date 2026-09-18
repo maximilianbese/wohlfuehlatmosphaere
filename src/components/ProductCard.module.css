@@ -112,3 +112,115 @@
   background: #ddd0c1;
   cursor: not-allowed;
 }
+
+.motifLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.motifSelect {
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+}
+
+.motifToggle {
+  margin-top: 1rem;
+  align-self: flex-start;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.4rem 0.8rem;
+}
+
+.motifToggle:hover {
+  border-color: var(--accent);
+}
+
+.motifGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.6rem;
+}
+
+.motifOption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: none;
+  padding: 0.35rem;
+  cursor: pointer;
+}
+
+.motifOption img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  border-radius: 6px;
+  display: block;
+}
+
+.motifName {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.motifOptionSelected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.motifBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(40, 34, 28, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 100;
+}
+
+.motifModal {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  width: min(760px, 100%);
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-md);
+}
+
+.motifModalHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.motifModalHead h3 {
+  margin: 0;
+}
+
+.motifClose {
+  border: none;
+  background: none;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--text-muted);
+}

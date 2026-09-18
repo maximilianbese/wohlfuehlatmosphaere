@@ -54,6 +54,7 @@ function Cart() {
                 <span className={styles.info}>
                   {item.productName} · {item.size.label} · {item.size.heightCm}{" "}
                   cm
+                  {item.motif && <> · Motiv {item.motif}</>}
                   {item.text && <em className={styles.text}> „{item.text}"</em>}
                 </span>
                 <span className={styles.price}>

@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import type { CandleSize, Product } from "../types";
 import { formatPrice } from "../utils/format";
 import { useCartContext } from "../context/CartContext";
 import styles from "./ProductCard.module.css";
+
+const motifNumbers = Array.from({ length: 29 }, (_, i) => i + 1);
 
 type ProductCardProps = {
   product: Product;
@@ -12,6 +15,8 @@ function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCartContext();
   const [selectedSize, setSelectedSize] = useState<CandleSize | null>(null);
   const [text, setText] = useState("");
+  const [motif, setMotif] = useState<number | null>(null);
+  const [showMotifs, setShowMotifs] = useState(false);
 
   return (
     <article className={styles.card}>
@@ -53,6 +58,59 @@ function ProductCard({ product }: ProductCardProps) {
         })}
       </ul>
 
+      <button
+        type="button"
+        className={styles.motifToggle}
+        onClick={() => setShowMotifs(true)}
+      >
+        {motif ? `Motiv: Bild ${motif} (ändern)` : "Motiv wählen"}
+      </button>
+
+      {showMotifs &&
+        createPortal(
+          <div
+            className={styles.motifBackdrop}
+            onClick={() => setShowMotifs(false)}
+          >
+            <div
+              className={styles.motifModal}
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className={styles.motifModalHead}>
+                <h3>Motiv wählen</h3>
+                <button
+                  type="button"
+                  className={styles.motifClose}
+                  onClick={() => setShowMotifs(false)}
+                >
+                  ✕
+                </button>
+              </div>
+              <div className={styles.motifGrid}>
+                {motifNumbers.map((n) => (
+                  <button
+                    key={n}
+                    type="button"
+                    className={
+                      n === motif
+                        ? `${styles.motifOption} ${styles.motifOptionSelected}`
+                        : styles.motifOption
+                    }
+                    onClick={() => {
+                      setMotif(n === motif ? null : n);
+                      setShowMotifs(false);
+                    }}
+                  >
+                    <img src={`/motive/bild-${n}.png`} alt={`Bild ${n}`} />
+                    <span className={styles.motifName}>Bild {n}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>,
+          document.body,
+        )}
+
       <textarea
         className={styles.personalization}
         placeholder="Dein Text (Name, Datum, Spruch ...)"
@@ -72,9 +130,12 @@ function ProductCard({ product }: ProductCardProps) {
             productName: product.name,
             size: selectedSize,
             text: text,
+            motif: motif,
           });
           setSelectedSize(null);
           setText("");
+          setMotif(null);
+          setShowMotifs(false);
         }}
       >
         {selectedSize
