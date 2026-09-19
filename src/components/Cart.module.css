@@ -93,3 +93,37 @@
   color: var(--accent-dark);
   font-weight: 600;
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+.formRow {
+  display: flex;
+  gap: 0.6rem;
+}
+.input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  background: var(--bg);
+}
+.input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.backButton {
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.backButton:hover {
+  color: var(--accent-dark);
+}

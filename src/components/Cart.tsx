@@ -1,24 +1,49 @@
 import { useState } from "react";
+import type { ChangeEvent, FormEvent } from "react";
 import { formatPrice } from "../utils/format";
 import { useCartContext } from "../context/CartContext";
 import styles from "./Cart.module.css";
 
+type Step = "idle" | "checkout" | "sending" | "done";
+
+const emptyCustomer = {
+  name: "",
+  email: "",
+  street: "",
+  zip: "",
+  city: "",
+};
+
 function Cart() {
   const { items, removeFromCart, clearCart } = useCartContext();
-  const [status, setStatus] = useState<"idle" | "sending" | "done">("idle");
+  const [step, setStep] = useState<Step>("idle");
+  const [customer, setCustomer] = useState(emptyCustomer);
 
   const total = items.reduce((sum, item) => sum + item.size.price, 0);
 
-  async function handleSubmit() {
-    setStatus("sending");
-    // Versand simulieren (hier käme später ein echtes Backend / eine E-Mail):
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    console.log("Bestellung abgeschickt:", items);
-    clearCart();
-    setStatus("done");
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+    setCustomer((prev) => ({ ...prev, [name]: value }));
   }
 
-  if (status === "done") {
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+    setStep("sending");
+    const order = {
+      customer,
+      items,
+      total,
+      date: new Date().toISOString(),
+    };
+    // Versand simulieren (später echtes Backend):
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    console.log("Bestellung:", order);
+    clearCart();
+    setCustomer(emptyCustomer);
+    setStep("done");
+  }
+
+  if (step === "done") {
     return (
       <section className={styles.cart}>
         <p className={styles.success}>
@@ -27,10 +52,83 @@ function Cart() {
         <button
           type="button"
           className={styles.orderButton}
-          onClick={() => setStatus("idle")}
+          onClick={() => setStep("idle")}
         >
           Weiter einkaufen
         </button>
+      </section>
+    );
+  }
+
+  if (step === "checkout" || step === "sending") {
+    return (
+      <section className={styles.cart}>
+        <div className={styles.head}>
+          <strong>Kasse</strong>
+          <span className={styles.total}>{formatPrice(total)}</span>
+        </div>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <input
+            className={styles.input}
+            name="name"
+            placeholder="Name"
+            value={customer.name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            className={styles.input}
+            name="email"
+            type="email"
+            placeholder="E-Mail"
+            value={customer.email}
+            onChange={handleChange}
+            required
+          />
+          <input
+            className={styles.input}
+            name="street"
+            placeholder="Straße & Hausnummer"
+            value={customer.street}
+            onChange={handleChange}
+            required
+          />
+          <div className={styles.formRow}>
+            <input
+              className={styles.input}
+              name="zip"
+              placeholder="PLZ"
+              value={customer.zip}
+              onChange={handleChange}
+              required
+            />
+            <input
+              className={styles.input}
+              name="city"
+              placeholder="Ort"
+              value={customer.city}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className={styles.orderButton}
+            disabled={step === "sending"}
+          >
+            {step === "sending"
+              ? "Wird gesendet …"
+              : `Kostenpflichtig bestellen — ${formatPrice(total)}`}
+          </button>
+          <button
+            type="button"
+            className={styles.backButton}
+            onClick={() => setStep("idle")}
+            disabled={step === "sending"}
+          >
+            Zurück zum Warenkorb
+          </button>
+        </form>
       </section>
     );
   }
@@ -74,12 +172,9 @@ function Cart() {
           <button
             type="button"
             className={styles.orderButton}
-            onClick={handleSubmit}
-            disabled={status === "sending"}
+            onClick={() => setStep("checkout")}
           >
-            {status === "sending"
-              ? "Wird gesendet …"
-              : `Bestellen — ${formatPrice(total)}`}
+            Zur Kasse — {formatPrice(total)}
           </button>
         </>
       )}
