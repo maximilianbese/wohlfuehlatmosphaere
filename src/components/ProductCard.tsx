@@ -75,6 +75,7 @@ function ProductCard({ product }: ProductCardProps) {
             variant: selectedVariant,
             text: text,
             motif: motif,
+            quantity: 1,
           });
           setSelectedVariant(null);
           setText("");

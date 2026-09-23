@@ -58,4 +58,14 @@ export const products: Product[] = [
       { label: "L · 27 cm", price: 25 },
     ],
   },
+  {
+    id: 5,
+    name: "Kerzenständer (Beispiel)",
+    category: "Kerzenständer",
+    description: "Handgegossener Kerzenständer aus Raysin.",
+    variants: [
+      { label: "klein", price: 12 },
+      { label: "groß", price: 18 },
+    ],
+  },
 ];

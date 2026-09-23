@@ -2,17 +2,31 @@ import { useState } from "react";
 import { products } from "./data/products";
 import ProductCard from "./components/ProductCard";
 import Cart from "./components/Cart";
+import FilterBar from "./components/FilterBar";
 import "./App.css";
 
-const categories = ["Alle", ...new Set(products.map((p) => p.category))];
+const productTypes = [...new Set(products.map((p) => p.category))];
+const occasionList = [...new Set(products.flatMap((p) => p.occasions ?? []))];
 
 function App() {
   const [activeCategory, setActiveCategory] = useState("Alle");
+  const [activeOccasion, setActiveOccasion] = useState("Alle");
 
-  const visibleProducts =
-    activeCategory === "Alle"
-      ? products
-      : products.filter((product) => product.category === activeCategory);
+  function resetFilters() {
+    setActiveCategory("Alle");
+    setActiveOccasion("Alle");
+  }
+
+  const isFiltered = activeCategory !== "Alle" || activeOccasion !== "Alle";
+
+  const visibleProducts = products.filter((product) => {
+    const matchesType =
+      activeCategory === "Alle" || product.category === activeCategory;
+    const matchesOccasion =
+      activeOccasion === "Alle" ||
+      (product.occasions ?? []).includes(activeOccasion);
+    return matchesType && matchesOccasion;
+  });
 
   return (
     <div className="app">
@@ -24,28 +38,41 @@ function App() {
       <main className="container">
         <Cart />
 
-        <div className="filter-bar">
-          {categories.map((category) => (
-            <button
-              key={category}
-              type="button"
-              className={
-                category === activeCategory
-                  ? "filter-button filter-button--active"
-                  : "filter-button"
-              }
-              onClick={() => setActiveCategory(category)}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
+        {productTypes.length > 1 && (
+          <FilterBar
+            label="Art"
+            options={["Alle", ...productTypes]}
+            active={activeCategory}
+            onChange={setActiveCategory}
+          />
+        )}
 
-        <div className="product-grid">
-          {visibleProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        {occasionList.length > 0 && (
+          <FilterBar
+            label="Anlass"
+            options={["Alle", ...occasionList]}
+            active={activeOccasion}
+            onChange={setActiveOccasion}
+          />
+        )}
+
+        {isFiltered && (
+          <button type="button" className="reset-button" onClick={resetFilters}>
+            Zurücksetzen
+          </button>
+        )}
+
+        <p className="result-count">{visibleProducts.length} Produkte</p>
+
+        {visibleProducts.length === 0 ? (
+          <p className="empty-hint">Für diese Auswahl gibt es leider nichts.</p>
+        ) : (
+          <div className="product-grid">
+            {visibleProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
       </main>
     </div>
   );

@@ -12,10 +12,13 @@ function CartLine({ item, onRemove }: CartLineProps) {
     <li className={styles.item}>
       <span className={styles.info}>
         {item.productName} · {item.variant.label}
+        {item.quantity > 1 && <> · ×{item.quantity}</>}
         {item.motif && <> · Motiv {item.motif}</>}
         {item.text && <em className={styles.text}> „{item.text}"</em>}
       </span>
-      <span className={styles.price}>{formatPrice(item.variant.price)}</span>
+      <span className={styles.price}>
+        {formatPrice(item.variant.price * item.quantity)}
+      </span>
       <button type="button" className={styles.remove} onClick={onRemove}>
         ✕
       </button>

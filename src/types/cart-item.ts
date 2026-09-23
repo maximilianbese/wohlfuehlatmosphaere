@@ -6,4 +6,5 @@ export type CartItem = {
   variant: Variant;
   text: string;
   motif: number | null;
+  quantity: number;
 };

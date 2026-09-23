@@ -20,7 +20,23 @@ export function useCart() {
   }, [items]);
 
   function addToCart(item: CartItem) {
-    setItems((prev) => [...prev, item]);
+    setItems((prev) => {
+      const index = prev.findIndex(
+        (p) =>
+          p.productId === item.productId &&
+          p.variant.label === item.variant.label &&
+          p.text === item.text &&
+          p.motif === item.motif,
+      );
+
+      if (index !== -1) {
+        return prev.map((p, i) =>
+          i === index ? { ...p, quantity: p.quantity + 1 } : p,
+        );
+      }
+
+      return [...prev, item];
+    });
   }
 
   function removeFromCart(index: number) {

@@ -12,7 +12,10 @@ function Cart() {
   const { items, removeFromCart, clearCart } = useCartContext();
   const [step, setStep] = useState<Step>("idle");
 
-  const total = items.reduce((sum, item) => sum + item.variant.price, 0);
+  const total = items.reduce(
+    (sum, item) => sum + item.variant.price * item.quantity,
+    0,
+  );
 
   async function handleOrder(customer: Customer) {
     setStep("sending");
