@@ -9,7 +9,13 @@ import styles from "./Cart.module.css";
 type Step = "idle" | "checkout" | "sending" | "done";
 
 function Cart() {
-  const { items, removeFromCart, clearCart } = useCartContext();
+  const {
+    items,
+    removeFromCart,
+    increaseQuantity,
+    decreaseQuantity,
+    clearCart,
+  } = useCartContext();
   const [step, setStep] = useState<Step>("idle");
 
   const total = items.reduce(
@@ -60,6 +66,8 @@ function Cart() {
                 key={index}
                 item={item}
                 onRemove={() => removeFromCart(index)}
+                onIncrease={() => increaseQuantity(index)}
+                onDecrease={() => decreaseQuantity(index)}
               />
             ))}
           </ul>

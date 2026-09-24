@@ -36,43 +36,55 @@ function App() {
       </header>
 
       <main className="container">
-        <Cart />
+        <div className="layout">
+          <div className="content">
+            {productTypes.length > 1 && (
+              <FilterBar
+                label="Art"
+                options={["Alle", ...productTypes]}
+                active={activeCategory}
+                onChange={setActiveCategory}
+              />
+            )}
 
-        {productTypes.length > 1 && (
-          <FilterBar
-            label="Art"
-            options={["Alle", ...productTypes]}
-            active={activeCategory}
-            onChange={setActiveCategory}
-          />
-        )}
+            {occasionList.length > 0 && (
+              <FilterBar
+                label="Anlass"
+                options={["Alle", ...occasionList]}
+                active={activeOccasion}
+                onChange={setActiveOccasion}
+              />
+            )}
 
-        {occasionList.length > 0 && (
-          <FilterBar
-            label="Anlass"
-            options={["Alle", ...occasionList]}
-            active={activeOccasion}
-            onChange={setActiveOccasion}
-          />
-        )}
+            {isFiltered && (
+              <button
+                type="button"
+                className="reset-button"
+                onClick={resetFilters}
+              >
+                Zurücksetzen
+              </button>
+            )}
 
-        {isFiltered && (
-          <button type="button" className="reset-button" onClick={resetFilters}>
-            Zurücksetzen
-          </button>
-        )}
+            <p className="result-count">{visibleProducts.length} Produkte</p>
 
-        <p className="result-count">{visibleProducts.length} Produkte</p>
-
-        {visibleProducts.length === 0 ? (
-          <p className="empty-hint">Für diese Auswahl gibt es leider nichts.</p>
-        ) : (
-          <div className="product-grid">
-            {visibleProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+            {visibleProducts.length === 0 ? (
+              <p className="empty-hint">
+                Für diese Auswahl gibt es leider nichts.
+              </p>
+            ) : (
+              <div className="product-grid">
+                {visibleProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            )}
           </div>
-        )}
+
+          <aside className="cart-column">
+            <Cart />
+          </aside>
+        </div>
       </main>
     </div>
   );

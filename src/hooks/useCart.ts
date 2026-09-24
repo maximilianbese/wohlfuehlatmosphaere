@@ -43,9 +43,32 @@ export function useCart() {
     setItems((prev) => prev.filter((_, i) => i !== index));
   }
 
+  function increaseQuantity(index: number) {
+    setItems((prev) =>
+      prev.map((p, i) =>
+        i === index ? { ...p, quantity: p.quantity + 1 } : p,
+      ),
+    );
+  }
+
+  function decreaseQuantity(index: number) {
+    setItems((prev) =>
+      prev.map((p, i) =>
+        i === index && p.quantity > 1 ? { ...p, quantity: p.quantity - 1 } : p,
+      ),
+    );
+  }
+
   function clearCart() {
     setItems([]);
   }
 
-  return { items, addToCart, removeFromCart, clearCart };
+  return {
+    items,
+    addToCart,
+    removeFromCart,
+    increaseQuantity,
+    decreaseQuantity,
+    clearCart,
+  };
 }
