@@ -72,8 +72,11 @@
 
 .filter-label {
   align-self: center;
-  margin-right: 0.25rem;
-  font-size: 0.9rem;
+  margin-right: 0.5rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
   color: var(--text-muted);
 }
 
