@@ -40,70 +40,64 @@ function CheckoutForm({ total, sending, onSubmit, onBack }: CheckoutFormProps) {
   }
 
   return (
-    <section className={styles.cart}>
-      <div className={styles.head}>
-        <strong>Kasse</strong>
-        <span className={styles.total}>{formatPrice(total)}</span>
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <input
+        className={styles.input}
+        name="name"
+        placeholder="Name"
+        value={customer.name}
+        onChange={handleChange}
+        required
+      />
+      <input
+        className={styles.input}
+        name="email"
+        type="email"
+        placeholder="E-Mail"
+        value={customer.email}
+        onChange={handleChange}
+        required
+      />
+      <input
+        className={styles.input}
+        name="street"
+        placeholder="Straße & Hausnummer"
+        value={customer.street}
+        onChange={handleChange}
+        required
+      />
+      <div className={styles.formRow}>
+        <input
+          className={styles.input}
+          name="zip"
+          placeholder="PLZ"
+          value={customer.zip}
+          onChange={handleChange}
+          required
+        />
+        <input
+          className={styles.input}
+          name="city"
+          placeholder="Ort"
+          value={customer.city}
+          onChange={handleChange}
+          required
+        />
       </div>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <input
-          className={styles.input}
-          name="name"
-          placeholder="Name"
-          value={customer.name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          className={styles.input}
-          name="email"
-          type="email"
-          placeholder="E-Mail"
-          value={customer.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          className={styles.input}
-          name="street"
-          placeholder="Straße & Hausnummer"
-          value={customer.street}
-          onChange={handleChange}
-          required
-        />
-        <div className={styles.formRow}>
-          <input
-            className={styles.input}
-            name="zip"
-            placeholder="PLZ"
-            value={customer.zip}
-            onChange={handleChange}
-            required
-          />
-          <input
-            className={styles.input}
-            name="city"
-            placeholder="Ort"
-            value={customer.city}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit" className={styles.orderButton} disabled={sending}>
-          {sending
-            ? "Wird gesendet …"
-            : `Kostenpflichtig bestellen — ${formatPrice(total)}`}
-        </button>
-        <button
-          type="button"
-          className={styles.backButton}
-          onClick={onBack}
-          disabled={sending}
-        >
-          Zurück zum Warenkorb
-        </button>
-      </form>
-    </section>
+      <button type="submit" className={styles.orderButton} disabled={sending}>
+        {sending
+          ? "Wird gesendet …"
+          : `Kostenpflichtig bestellen — ${formatPrice(total)}`}
+      </button>
+      <button
+        type="button"
+        className={styles.backButton}
+        onClick={onBack}
+        disabled={sending}
+      >
+        Zurück zum Warenkorb
+      </button>
+    </form>
   );
 }
 

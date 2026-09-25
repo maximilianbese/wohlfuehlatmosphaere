@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useCartContext } from "../context/CartContext";
 import { formatPrice } from "../utils/format";
 import CartLine from "./CartLine";
-import CheckoutForm, { type Customer } from "./CheckoutForm";
+import Checkout from "./Checkout";
+import { type Customer } from "./CheckoutForm";
 import OrderConfirmation from "./OrderConfirmation";
 import styles from "./Cart.module.css";
 
@@ -38,7 +39,7 @@ function Cart() {
 
   if (step === "checkout" || step === "sending") {
     return (
-      <CheckoutForm
+      <Checkout
         total={total}
         sending={step === "sending"}
         onSubmit={handleOrder}
