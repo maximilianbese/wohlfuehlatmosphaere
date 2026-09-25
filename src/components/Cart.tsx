@@ -62,13 +62,13 @@ function Cart() {
       ) : (
         <>
           <ul className={styles.list}>
-            {items.map((item, index) => (
+            {items.map((item) => (
               <CartLine
-                key={index}
+                key={item.id}
                 item={item}
-                onRemove={() => removeFromCart(index)}
-                onIncrease={() => increaseQuantity(index)}
-                onDecrease={() => decreaseQuantity(index)}
+                onRemove={() => removeFromCart(item.id)}
+                onIncrease={() => increaseQuantity(item.id)}
+                onDecrease={() => decreaseQuantity(item.id)}
               />
             ))}
           </ul>

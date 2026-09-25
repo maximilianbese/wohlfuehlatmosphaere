@@ -19,7 +19,7 @@ export function useCart() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   }, [items]);
 
-  function addToCart(item: CartItem) {
+  function addToCart(item: Omit<CartItem, "id">) {
     setItems((prev) => {
       const index = prev.findIndex(
         (p) =>
@@ -35,26 +35,24 @@ export function useCart() {
         );
       }
 
-      return [...prev, item];
+      return [...prev, { ...item, id: crypto.randomUUID() }];
     });
   }
 
-  function removeFromCart(index: number) {
-    setItems((prev) => prev.filter((_, i) => i !== index));
+  function removeFromCart(id: string) {
+    setItems((prev) => prev.filter((p) => p.id !== id));
   }
 
-  function increaseQuantity(index: number) {
+  function increaseQuantity(id: string) {
     setItems((prev) =>
-      prev.map((p, i) =>
-        i === index ? { ...p, quantity: p.quantity + 1 } : p,
-      ),
+      prev.map((p) => (p.id === id ? { ...p, quantity: p.quantity + 1 } : p)),
     );
   }
 
-  function decreaseQuantity(index: number) {
+  function decreaseQuantity(id: string) {
     setItems((prev) =>
-      prev.map((p, i) =>
-        i === index && p.quantity > 1 ? { ...p, quantity: p.quantity - 1 } : p,
+      prev.map((p) =>
+        p.id === id && p.quantity > 1 ? { ...p, quantity: p.quantity - 1 } : p,
       ),
     );
   }

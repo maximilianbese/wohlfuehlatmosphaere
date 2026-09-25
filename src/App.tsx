@@ -1,32 +1,28 @@
-import { useState } from "react";
-import { products } from "./data/products";
 import ProductCard from "./components/ProductCard";
 import Cart from "./components/Cart";
 import FilterBar from "./components/FilterBar";
+import {
+  useProductFilters,
+  productTypes,
+  occasionList,
+} from "./hooks/useProductFilters";
 import "./App.css";
 
-const productTypes = [...new Set(products.map((p) => p.category))];
-const occasionList = [...new Set(products.flatMap((p) => p.occasions ?? []))];
-
 function App() {
-  const [activeCategory, setActiveCategory] = useState("Alle");
-  const [activeOccasion, setActiveOccasion] = useState("Alle");
-
-  function resetFilters() {
-    setActiveCategory("Alle");
-    setActiveOccasion("Alle");
-  }
-
-  const isFiltered = activeCategory !== "Alle" || activeOccasion !== "Alle";
-
-  const visibleProducts = products.filter((product) => {
-    const matchesType =
-      activeCategory === "Alle" || product.category === activeCategory;
-    const matchesOccasion =
-      activeOccasion === "Alle" ||
-      (product.occasions ?? []).includes(activeOccasion);
-    return matchesType && matchesOccasion;
-  });
+  const {
+    activeCategory,
+    setActiveCategory,
+    activeOccasion,
+    setActiveOccasion,
+    search,
+    setSearch,
+    sort,
+    setSort,
+    resetFilters,
+    isFiltered,
+    visibleProducts,
+    sortedProducts,
+  } = useProductFilters();
 
   return (
     <div className="app">
@@ -38,6 +34,22 @@ function App() {
       <main className="container">
         <div className="layout">
           <div className="content">
+            <input
+              type="search"
+              className="search-input"
+              placeholder="Produkt suchen..."
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+            />
+            <select
+              className="sort-select"
+              value={sort}
+              onChange={(event) => setSort(event.target.value)}
+            >
+              <option value="standard">Sortieren: Standard</option>
+              <option value="price-asc">Preis aufsteigend</option>
+              <option value="price-desc">Preis absteigend</option>
+            </select>
             {productTypes.length > 1 && (
               <FilterBar
                 label="Art"
@@ -74,7 +86,7 @@ function App() {
               </p>
             ) : (
               <div className="product-grid">
-                {visibleProducts.map((product) => (
+                {sortedProducts.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
               </div>

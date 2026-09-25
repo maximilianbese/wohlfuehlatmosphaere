@@ -21,8 +21,8 @@ function Checkout({ total, sending, onSubmit, onBack }: CheckoutProps) {
 
         <div className={styles.summary}>
           <ul className={styles.list}>
-            {items.map((item, index) => (
-              <li key={index} className={styles.line}>
+            {items.map((item) => (
+              <li key={item.id} className={styles.line}>
                 <span className={styles.lineInfo}>
                   {item.productName} · {item.variant.label}
                   {item.quantity > 1 && <> · ×{item.quantity}</>}
