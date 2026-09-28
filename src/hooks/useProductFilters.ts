@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { products } from "../data/products";
+import { ALL } from "../constants/shop";
+import type { SortValue } from "../constants/shop";
 
 export const productTypes = [...new Set(products.map((p) => p.category))];
 export const occasionList = [
@@ -7,25 +9,25 @@ export const occasionList = [
 ];
 
 export function useProductFilters() {
-  const [activeCategory, setActiveCategory] = useState("Alle");
-  const [activeOccasion, setActiveOccasion] = useState("Alle");
+  const [activeCategory, setActiveCategory] = useState(ALL);
+  const [activeOccasion, setActiveOccasion] = useState(ALL);
   const [search, setSearch] = useState("");
-  const [sort, setSort] = useState("standard");
+  const [sort, setSort] = useState<SortValue>("standard");
 
   function resetFilters() {
-    setActiveCategory("Alle");
-    setActiveOccasion("Alle");
+    setActiveCategory(ALL);
+    setActiveOccasion(ALL);
     setSearch("");
   }
 
   const isFiltered =
-    activeCategory !== "Alle" || activeOccasion !== "Alle" || search !== "";
+    activeCategory !== ALL || activeOccasion !== ALL || search !== "";
 
   const visibleProducts = products.filter((product) => {
     const matchesType =
-      activeCategory === "Alle" || product.category === activeCategory;
+      activeCategory === ALL || product.category === activeCategory;
     const matchesOccasion =
-      activeOccasion === "Alle" ||
+      activeOccasion === ALL ||
       (product.occasions ?? []).includes(activeOccasion);
     const matchesSearch = product.name
       .toLocaleLowerCase()

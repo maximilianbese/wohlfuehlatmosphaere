@@ -1,11 +1,13 @@
 import ProductCard from "./components/ProductCard";
 import Cart from "./components/Cart";
 import FilterBar from "./components/FilterBar";
+import ProductToolbar from "./components/ProductToolbar";
 import {
   useProductFilters,
   productTypes,
   occasionList,
 } from "./hooks/useProductFilters";
+import { ALL } from "./constants/shop";
 import "./App.css";
 
 function App() {
@@ -34,26 +36,16 @@ function App() {
       <main className="container">
         <div className="layout">
           <div className="content">
-            <input
-              type="search"
-              className="search-input"
-              placeholder="Produkt suchen..."
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
+            <ProductToolbar
+              search={search}
+              onSearchChange={setSearch}
+              sort={sort}
+              onSortChange={setSort}
             />
-            <select
-              className="sort-select"
-              value={sort}
-              onChange={(event) => setSort(event.target.value)}
-            >
-              <option value="standard">Sortieren: Standard</option>
-              <option value="price-asc">Preis aufsteigend</option>
-              <option value="price-desc">Preis absteigend</option>
-            </select>
             {productTypes.length > 1 && (
               <FilterBar
                 label="Art"
-                options={["Alle", ...productTypes]}
+                options={[ALL, ...productTypes]}
                 active={activeCategory}
                 onChange={setActiveCategory}
               />
@@ -62,7 +54,7 @@ function App() {
             {occasionList.length > 0 && (
               <FilterBar
                 label="Anlass"
-                options={["Alle", ...occasionList]}
+                options={[ALL, ...occasionList]}
                 active={activeOccasion}
                 onChange={setActiveOccasion}
               />
