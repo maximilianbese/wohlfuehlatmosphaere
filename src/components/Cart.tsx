@@ -75,6 +75,14 @@ function Cart() {
 
           <button
             type="button"
+            className={styles.clearButton}
+            onClick={clearCart}
+          >
+            Warenkorb leeren
+          </button>
+
+          <button
+            type="button"
             className={styles.orderButton}
             onClick={() => setStep("checkout")}
           >
