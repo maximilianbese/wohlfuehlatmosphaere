@@ -1,7 +1,8 @@
 import { createPortal } from "react-dom";
 import { useCartContext } from "../context/CartContext";
 import { formatPrice } from "../utils/format";
-import CheckoutForm, { type Customer } from "./CheckoutForm";
+import CheckoutForm from "./CheckoutForm";
+import type { Customer } from "../types";
 import styles from "./Checkout.module.css";
 
 type CheckoutProps = {

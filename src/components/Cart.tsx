@@ -3,7 +3,7 @@ import { useCartContext } from "../context/CartContext";
 import { formatPrice } from "../utils/format";
 import CartLine from "./CartLine";
 import Checkout from "./Checkout";
-import { type Customer } from "./CheckoutForm";
+import type { Customer } from "../types";
 import OrderConfirmation from "./OrderConfirmation";
 import styles from "./Cart.module.css";
 

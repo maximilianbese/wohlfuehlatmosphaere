@@ -4,6 +4,7 @@ import { formatPrice } from "../utils/format";
 import { useCartContext } from "../context/CartContext";
 import MotifPicker from "./MotifPicker";
 import styles from "./ProductCard.module.css";
+import VariantPicker from "./VariantPicker";
 
 type ProductCardProps = {
   product: Product;
@@ -31,27 +32,11 @@ function ProductCard({ product }: ProductCardProps) {
       <h2>{product.name}</h2>
       {product.description && <p>{product.description}</p>}
 
-      <ul className={styles.sizes}>
-        {product.variants.map((variant) => {
-          const isSelected = variant.label === selectedVariant?.label;
-          return (
-            <li key={variant.label}>
-              <button
-                type="button"
-                className={
-                  isSelected
-                    ? `${styles.sizeRow} ${styles.sizeRowSelected}`
-                    : styles.sizeRow
-                }
-                onClick={() => setSelectedVariant(variant)}
-              >
-                <span>{variant.label}</span>
-                <span>{formatPrice(variant.price)}</span>
-              </button>
-            </li>
-          );
-        })}
-      </ul>
+      <VariantPicker
+        variants={product.variants}
+        selected={selectedVariant}
+        onSelect={setSelectedVariant}
+      />
 
       {product.hasMotif && <MotifPicker value={motif} onChange={setMotif} />}
 

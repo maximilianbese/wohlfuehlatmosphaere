@@ -1,15 +1,8 @@
 import { useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
+import type { Customer } from "../types";
 import { formatPrice } from "../utils/format";
 import styles from "./Cart.module.css";
-
-export type Customer = {
-  name: string;
-  email: string;
-  street: string;
-  zip: string;
-  city: string;
-};
 
 const emptyCustomer: Customer = {
   name: "",
