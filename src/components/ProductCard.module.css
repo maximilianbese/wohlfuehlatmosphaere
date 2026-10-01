@@ -37,9 +37,13 @@
   justify-content: center;
   aspect-ratio: 4 / 5;
   margin-bottom: 1rem;
-  border-radius: 12px;
+  border: none;
+  padding: 0;
+  width: 100%;
+  border-radius: 10px;
   overflow: hidden;
   background: var(--accent-soft);
+  cursor: pointer;
 }
 
 .image {

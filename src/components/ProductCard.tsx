@@ -5,6 +5,7 @@ import { useCartContext } from "../context/CartContext";
 import MotifPicker from "./MotifPicker";
 import styles from "./ProductCard.module.css";
 import VariantPicker from "./VariantPicker";
+import ProductDetail from "./ProductDetail";
 
 type ProductCardProps = {
   product: Product;
@@ -15,10 +16,15 @@ function ProductCard({ product }: ProductCardProps) {
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
   const [text, setText] = useState("");
   const [motif, setMotif] = useState<number | null>(null);
+  const [showDetail, setShowDetail] = useState(false);
 
   return (
     <article className={styles.card}>
-      <div className={styles.imageWrap}>
+      <button
+        type="button"
+        className={styles.imageWrap}
+        onClick={() => setShowDetail(true)}
+      >
         {product.image ? (
           <img
             className={styles.image}
@@ -28,7 +34,7 @@ function ProductCard({ product }: ProductCardProps) {
         ) : (
           <span className={styles.imagePlaceholder}>🕯️</span>
         )}
-      </div>
+      </button>
       <h2>{product.name}</h2>
       {product.description && <p>{product.description}</p>}
 
@@ -71,6 +77,10 @@ function ProductCard({ product }: ProductCardProps) {
           ? `In den Warenkorb - ${formatPrice(selectedVariant.price)}`
           : "Bitte Größe wählen"}
       </button>
+
+      {showDetail && (
+        <ProductDetail product={product} onClose={() => setShowDetail(false)} />
+      )}
     </article>
   );
 }

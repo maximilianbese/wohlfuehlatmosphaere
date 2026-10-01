@@ -1,0 +1,125 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  background: rgba(58, 50, 44, 0.55);
+}
+
+.dialog {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  max-width: 860px;
+  width: 100%;
+  max-height: 88vh;
+  overflow: hidden;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+}
+
+.close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 1;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.close:hover {
+  background: #fff;
+  color: var(--accent-dark);
+}
+
+.imageWrap {
+  background: var(--accent-soft);
+  overflow: hidden;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 4rem;
+  opacity: 0.5;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  overflow-y: auto;
+  border-left: 1px solid var(--border);
+}
+
+.category {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--sage);
+}
+
+.name {
+  margin: 0.4rem 0 0.75rem;
+}
+
+.text {
+  margin: 0 0 1.25rem;
+  color: var(--text-muted);
+}
+
+.price {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--accent-dark);
+}
+
+.sizes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sizeRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 640px) {
+  .dialog {
+    grid-template-columns: 1fr;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .info {
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+}
