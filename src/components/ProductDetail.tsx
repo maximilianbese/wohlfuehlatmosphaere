@@ -1,8 +1,10 @@
 import { createPortal } from "react-dom";
-import type { Product } from "../types";
+import { useEffect, useState } from "react";
+import type { Product, Variant } from "../types";
 import { formatPrice } from "../utils/format";
+import { useCartContext } from "../context/CartContext";
+import VariantPicker from "./VariantPicker";
 import styles from "./ProductDetail.module.css";
-import { useEffect } from "react";
 
 type ProductDetailProps = {
   product: Product;
@@ -10,7 +12,8 @@ type ProductDetailProps = {
 };
 
 function ProductDetail({ product, onClose }: ProductDetailProps) {
-  const fromPrice = Math.min(...product.variants.map((v) => v.price));
+  const { addToCart } = useCartContext();
+  const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
 
   useEffect(() => {
     function handleKey(event: KeyboardEvent) {
@@ -19,6 +22,21 @@ function ProductDetail({ product, onClose }: ProductDetailProps) {
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
   }, [onClose]);
+
+  function handleAdd() {
+    if (selectedVariant === null) return;
+    addToCart({
+      productId: product.id,
+      productName: product.name,
+      variant: selectedVariant,
+      text: "",
+      motif: null,
+      quantity: 1,
+    });
+    onClose();
+  }
+
+  const fromPrice = Math.min(...product.variants.map((v) => v.price));
 
   return createPortal(
     <div className={styles.overlay} onClick={onClose}>
@@ -50,14 +68,22 @@ function ProductDetail({ product, onClose }: ProductDetailProps) {
           )}
           <p className={styles.price}>ab {formatPrice(fromPrice)}</p>
 
-          <ul className={styles.sizes}>
-            {product.variants.map((variant) => (
-              <li key={variant.label} className={styles.sizeRow}>
-                <span>{variant.label}</span>
-                <span>{formatPrice(variant.price)}</span>
-              </li>
-            ))}
-          </ul>
+          <VariantPicker
+            variants={product.variants}
+            selected={selectedVariant}
+            onSelect={setSelectedVariant}
+          />
+
+          <button
+            type="button"
+            className={styles.addButton}
+            disabled={selectedVariant === null}
+            onClick={handleAdd}
+          >
+            {selectedVariant
+              ? `In den Warenkorb — ${formatPrice(selectedVariant.price)}`
+              : "Bitte Größe wählen"}
+          </button>
         </div>
       </div>
     </div>,

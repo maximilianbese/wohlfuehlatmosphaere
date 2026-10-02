@@ -9,8 +9,10 @@ import {
 } from "./hooks/useProductFilters";
 import { ALL } from "./constants/shop";
 import "./App.css";
+import { useTheme } from "./hooks/useTheme";
 
 function App() {
+  const { theme, toggleTheme } = useTheme();
   const {
     activeCategory,
     setActiveCategory,
@@ -31,6 +33,14 @@ function App() {
       <header className="site-header">
         <h1>Wohlfühlatmosphäre</h1>
         <p className="tagline">Personalisierte Kerzen für besondere Momente</p>
+        <button
+          type="button"
+          className="theme-toggle"
+          onClick={toggleTheme}
+          aria-label="Farbmodus wechseln"
+        >
+          {theme === "dark" ? "☀️" : "🌙"}
+        </button>
       </header>
 
       <main className="container">

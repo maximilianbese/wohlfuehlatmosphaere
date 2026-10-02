@@ -8,6 +8,8 @@
   --accent-dark: #96683f;
   --accent-soft: #f3ebe1;
   --sage: #97a583;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 12px 30px -12px rgba(0, 0, 0, 0.5);
 
   --radius: 14px;
   --shadow-sm: 0 1px 3px rgba(58, 50, 44, 0.06);
@@ -35,4 +37,18 @@ h2 {
   font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: 0.01em;
+}
+
+:root[data-theme="dark"] {
+  --bg: #221d19;
+  --surface: #2b2420;
+  --border: #3f362e;
+  --text: #f0e9e0;
+  --text-muted: #b4a695;
+  --accent: #c89b73;
+  --accent-dark: #d8b48f;
+  --accent-soft: #352c25;
+  --sage: #9cab86;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 12px 30px -12px rgba(0, 0, 0, 0.5);
 }
