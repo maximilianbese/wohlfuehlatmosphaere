@@ -11,6 +11,7 @@ import { ALL } from "./constants/shop";
 import "./App.css";
 import { useTheme } from "./hooks/useTheme";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 function App() {
   const { theme, toggleTheme } = useTheme();
@@ -102,6 +103,7 @@ function App() {
           </aside>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

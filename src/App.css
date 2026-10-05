@@ -1,14 +1,23 @@
 .site-header {
   position: relative;
   text-align: center;
-  padding: 4.5rem 1.5rem 3.5rem;
-  background: linear-gradient(180deg, var(--accent-soft), var(--bg));
+  padding: 6rem 1.5rem 5rem;
+  background-image:
+    linear-gradient(rgba(34, 29, 25, 0.5), rgba(34, 29, 25, 0.65)),
+    url("/produkte/taufkerze.jpg");
+  background-size: cover;
+  background-position: center;
 }
 
 .site-header h1 {
   margin: 0;
   font-size: clamp(2.5rem, 5vw, 3.75rem);
   letter-spacing: 0.02em;
+  color: #fff;
+}
+
+.site-header .tagline {
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .tagline {
