@@ -10,6 +10,7 @@ import {
 import { ALL } from "./constants/shop";
 import "./App.css";
 import { useTheme } from "./hooks/useTheme";
+import Navbar from "./components/Navbar";
 
 function App() {
   const { theme, toggleTheme } = useTheme();
@@ -30,6 +31,7 @@ function App() {
 
   return (
     <div className="app">
+      <Navbar />
       <header className="site-header">
         <h1>Wohlfühlatmosphäre</h1>
         <p className="tagline">Personalisierte Kerzen für besondere Momente</p>
