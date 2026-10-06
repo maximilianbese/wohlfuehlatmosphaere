@@ -1,16 +1,33 @@
+import { useState } from "react";
 import { useCartContext } from "../context/CartContext";
 import styles from "./Navbar.module.css";
 
-function Navbar() {
+type NavbarProps = {
+  onCartClick: () => void;
+};
+
+function Navbar({ onCartClick }: NavbarProps) {
   const { items } = useCartContext();
   const count = items.length;
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <nav className={styles.nav}>
       <div className={styles.inner}>
         <span className={styles.brand}>Wohlfühlatmosphäre</span>
+        <button
+          type="button"
+          className={styles.burger}
+          aria-label="Menü"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          ☰
+        </button>
 
-        <ul className={styles.links}>
+        <ul
+          className={`${styles.links} ${menuOpen ? styles.open : ""}`}
+          onClick={() => setMenuOpen(false)}
+        >
           <li>
             <a href="#">Home</a>
           </li>
@@ -25,7 +42,12 @@ function Navbar() {
           </li>
         </ul>
 
-        <button type="button" className={styles.cart} aria-label="Warenkorb">
+        <button
+          type="button"
+          className={styles.cart}
+          aria-label="Warenkorb"
+          onClick={onCartClick}
+        >
           🛒
           {count > 0 && <span className={styles.badge}>{count}</span>}
         </button>

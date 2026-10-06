@@ -228,3 +228,9 @@ qtyButton:hover {
 .clearButton:hover {
   color: var(--accent-dark);
 }
+
+@media (max-width: 900px) {
+  .cart {
+    position: static;
+  }
+}

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import ProductCard from "./components/ProductCard";
 import Cart from "./components/Cart";
 import FilterBar from "./components/FilterBar";
@@ -12,9 +13,11 @@ import "./App.css";
 import { useTheme } from "./hooks/useTheme";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Drawer from "./components/Drawer";
 
 function App() {
   const { theme, toggleTheme } = useTheme();
+  const [cartOpen, setCartOpen] = useState(false);
   const {
     activeCategory,
     setActiveCategory,
@@ -32,7 +35,7 @@ function App() {
 
   return (
     <div className="app">
-      <Navbar />
+      <Navbar onCartClick={() => setCartOpen(true)} />
       <header className="site-header">
         <h1>Wohlfühlatmosphäre</h1>
         <p className="tagline">Personalisierte Kerzen für besondere Momente</p>
@@ -98,9 +101,9 @@ function App() {
             )}
           </div>
 
-          <aside className="cart-column">
+          <Drawer open={cartOpen} onClose={() => setCartOpen(false)}>
             <Cart />
-          </aside>
+          </Drawer>
         </div>
       </main>
       <Footer />
