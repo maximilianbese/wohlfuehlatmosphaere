@@ -8,7 +8,7 @@ type NavbarProps = {
 
 function Navbar({ onCartClick }: NavbarProps) {
   const { items } = useCartContext();
-  const count = items.length;
+  const count = items.reduce((sum, item) => sum + item.quantity, 0);
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (

@@ -23,6 +23,7 @@ function Cart() {
     (sum, item) => sum + item.variant.price * item.quantity,
     0,
   );
+  const count = items.reduce((sum, item) => sum + item.quantity, 0);
 
   async function handleOrder(customer: Customer) {
     setStep("sending");
@@ -51,7 +52,7 @@ function Cart() {
   return (
     <section className={styles.cart}>
       <div className={styles.head}>
-        <strong>Warenkorb ({items.length})</strong>
+        <strong>Warenkorb ({count})</strong>
         <span className={styles.total}>{formatPrice(total)}</span>
       </div>
 
