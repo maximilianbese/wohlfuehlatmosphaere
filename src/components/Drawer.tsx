@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
 import styles from "./Drawer.module.css";
+import { useEffect } from "react";
 
 type DrawerProps = {
   open: boolean;
@@ -9,6 +10,14 @@ type DrawerProps = {
 };
 
 function Drawer({ open, onClose, children }: DrawerProps) {
+  useEffect(() => {
+    function handleKey(event: KeyboardEvent) {
+      if (event.key === "Escape" && open) onClose();
+    }
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [open, onClose]);
+
   if (!open) return null;
 
   return createPortal(

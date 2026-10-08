@@ -12,6 +12,7 @@ type Step = "idle" | "checkout" | "sending" | "done";
 function Cart() {
   const {
     items,
+    count,
     removeFromCart,
     increaseQuantity,
     decreaseQuantity,
@@ -23,7 +24,6 @@ function Cart() {
     (sum, item) => sum + item.variant.price * item.quantity,
     0,
   );
-  const count = items.reduce((sum, item) => sum + item.quantity, 0);
 
   async function handleOrder(customer: Customer) {
     setStep("sending");
