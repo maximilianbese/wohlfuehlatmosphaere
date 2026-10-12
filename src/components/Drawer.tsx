@@ -1,7 +1,7 @@
+import { useEffect } from "react";
 import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
 import styles from "./Drawer.module.css";
-import { useEffect } from "react";
 
 type DrawerProps = {
   open: boolean;
@@ -11,17 +11,28 @@ type DrawerProps = {
 
 function Drawer({ open, onClose, children }: DrawerProps) {
   useEffect(() => {
+    if (!open) return;
+
     function handleKey(event: KeyboardEvent) {
-      if (event.key === "Escape" && open) onClose();
+      if (event.key === "Escape") {
+        onClose();
+      }
     }
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
+
+    document.addEventListener("keydown", handleKey);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+    };
   }, [open, onClose]);
 
-  if (!open) return null;
-
   return createPortal(
-    <div className={styles.overlay} onClick={onClose}>
+    <div
+      className={`${styles.overlay} ${open ? styles.open : ""}`}
+      onClick={onClose}
+    >
       <aside
         className={styles.panel}
         onClick={(event) => event.stopPropagation()}
